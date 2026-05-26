@@ -1,0 +1,93 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1f2937;
+  --card-bg: #f3f4f6;
+  --card-text: #1f2937;
+  --button-bg: #2563eb;
+  --button-text: #ffffff;
+  --border-color: #e5e7eb;
+}
+
+body.dark-mode {
+  --bg-color: #1f2937;
+  --text-color: #f3f4f6;
+  --card-bg: #374151;
+  --card-text: #f3f4f6;
+  --button-bg: #fbbf24;
+  --button-text: #1f2937;
+  --border-color: #4b5563;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  opacity: 0.9;
+}
+
+.content {
+  max-width: 800px;
+  margin: 100px auto 40px;
+  padding: 0 20px;
+}
+
+.content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.content > p {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--card-text);
+}
+
+.card p {
+  line-height: 1.6;
+  color: var(--card-text);
+}
