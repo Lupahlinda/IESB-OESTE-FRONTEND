@@ -9,6 +9,7 @@ import { MainTemplate } from '../../templates/MainTemplate'
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext'
 import { showMessage } from '../../adapters/showMessage'
 import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions'
+import { updateSettings } from '../../services/api'
 
 export function Settings() {
   const { state, dispatch } = useTaskContext()
@@ -20,7 +21,7 @@ export function Settings() {
     document.title = 'Configurações - Pomodoro'
   }, [])
 
-  function handleSaveSettings(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSaveSettings(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     showMessage.dismiss()
 
@@ -50,16 +51,22 @@ export function Settings() {
       return
     }
 
-    dispatch({
-      type: TaskActionTypes.CHANGE_SETTINGS,
-      payload: {
-        workTime,
-        shortBreakTime,
-        longBreakTime,
-      },
-    })
+    const nextConfig = {
+      workTime,
+      shortBreakTime,
+      longBreakTime,
+    }
 
-    showMessage.success('Configurações salvas')
+    try {
+      await updateSettings(nextConfig)
+      dispatch({
+        type: TaskActionTypes.CHANGE_SETTINGS,
+        payload: nextConfig,
+      })
+      showMessage.success('Configurações salvas')
+    } catch {
+      showMessage.error('Não foi possível salvar as configurações na API')
+    }
   }
 
   return (

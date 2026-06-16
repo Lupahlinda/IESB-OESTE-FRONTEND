@@ -11,6 +11,7 @@ import { getTaskStatus } from '../../utils/getTaskStatus'
 import { sortTasks, type SortTasksOptions } from '../../utils/sortTasks'
 import { TaskActionTypes } from '../../contexts/TaskContext/TaskActions'
 import { showMessage } from '../../adapters/showMessage'
+import { clearTasks } from '../../services/api'
 
 import styles from './styles.module.css'
 
@@ -51,8 +52,18 @@ export function History() {
   useEffect(() => {
     if (!confirmClearHistory) return
 
-    setConfirmClearHistory(false)
-    dispatch({ type: TaskActionTypes.RESET_STATE })
+    async function run() {
+      try {
+        await clearTasks()
+        dispatch({ type: TaskActionTypes.CLEAR_TASKS })
+      } catch {
+        showMessage.error('Não foi possível limpar o histórico na API')
+      } finally {
+        setConfirmClearHistory(false)
+      }
+    }
+
+    run()
   }, [confirmClearHistory, dispatch])
 
   useEffect(() => {

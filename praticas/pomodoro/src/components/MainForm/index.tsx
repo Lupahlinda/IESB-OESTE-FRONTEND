@@ -10,6 +10,7 @@ import { getNextCycle } from '../../utils/getNextCycle'
 import { getNextCycleType } from '../../utils/getNextCycleType'
 
 import { showMessage } from '../../adapters/showMessage'
+import { createTask, interruptTask } from '../../services/api'
 
 import { Cycles } from '../Cycles'
 import { Tips } from '../Tips'
@@ -27,7 +28,7 @@ export function MainForm() {
   const nextCycle = getNextCycle(state.currentCycle)
   const nextCycleType = getNextCycleType(nextCycle)
 
-  function handleCreateNewTask(
+  async function handleCreateNewTask(
     event: React.FormEvent<HTMLFormElement>,
   ) {
     event.preventDefault()
@@ -60,19 +61,36 @@ export function MainForm() {
 
     showMessage.success('Tarefa iniciada')
 
+    try {
+      await createTask(newTask)
+    } catch {
+      showMessage.error('A tarefa iniciou, mas não foi persistida na API')
+    }
+
     taskNameInput.current.value = ''
   }
 
-  function handleInterruptTask() {
+  async function handleInterruptTask() {
     showMessage.dismiss()
 
     if (!state.activeTask) return
 
     showMessage.error('Tarefa interrompida!')
 
+    const taskId = state.activeTask.id
+    const interruptDate = Date.now()
+
     dispatch({
       type: TaskActionTypes.INTERRUPT_TASK,
     })
+
+    try {
+      await interruptTask(taskId, interruptDate)
+    } catch {
+      showMessage.error(
+        'A tarefa foi interrompida localmente, mas a API falhou',
+      )
+    }
   }
 
   return (

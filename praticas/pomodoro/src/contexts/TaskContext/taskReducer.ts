@@ -83,6 +83,28 @@ export function taskReducer(
       return { ...initialTaskState }
     }
 
+    case TaskActionTypes.CLEAR_TASKS: {
+      return {
+        ...state,
+        tasks: [],
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: '00:00',
+        currentCycle: 0,
+      }
+    }
+
+    case TaskActionTypes.HYDRATE_TASKS: {
+      return {
+        ...state,
+        tasks: action.payload,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: '00:00',
+        currentCycle: action.payload.length,
+      }
+    }
+
     case TaskActionTypes.CHANGE_SETTINGS: {
       return {
         ...state,
