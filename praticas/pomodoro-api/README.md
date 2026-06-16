@@ -1,17 +1,17 @@
-# Chronos API (Express + Prisma + MySQL)
+# Pomodoro API (Express + Prisma + MySQL)
 
 Este documento descreve, em formato de instrução guiada, todo o processo de:
 
-1. Criação da `chronos-api` (backend Express),
+1. Criação da `Pomodoro-api` (backend Express),
 2. Configuração do banco MySQL com Prisma,
-3. Integração com o frontend `chronos-pomodoro`,
+3. Integração com o frontend `Pomodoro-pomodoro`,
 4. Testes dos endpoints no Postman.
 
 ---
 
 ## 1) Objetivo da API
 
-A `chronos-api` foi criada para persistir dados do projeto Pomodoro que antes ficavam apenas no frontend/localStorage:
+A `Pomodoro-api` foi criada para persistir dados do projeto Pomodoro que antes ficavam apenas no frontend/localStorage:
 
 - Configurações do timer (`settings`)
 - Histórico de tarefas (`tasks`)
@@ -29,10 +29,10 @@ Com isso, o frontend passa a ter integração real com banco de dados MySQL.
 
 ---
 
-## 3) Estrutura da `chronos-api`
+## 3) Estrutura da `Pomodoro-api`
 
 ```txt
-chronos-api/
+Pomodoro-api/
   prisma/
     schema.prisma
   src/
@@ -174,7 +174,7 @@ Na resposta HTTP eles são serializados para `string`, evitando erro de `JSON.st
 
 ---
 
-## 8) Alterações aplicadas no frontend (`chronos-pomodoro`)
+## 8) Alterações aplicadas no frontend (`Pomodoro-pomodoro`)
 
 Para integrar com a API, os seguintes pontos foram modificados:
 
@@ -309,7 +309,7 @@ export function Settings() {
   const longBreakTimeInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    document.title = "Configurações - Chronos Pomodoro";
+    document.title = "Configurações - Pomodoro Pomodoro";
   }, []);
 
   async function handleSaveSettings(e: React.FormEvent<HTMLFormElement>) {
@@ -612,7 +612,7 @@ export function History() {
   }, [state.tasks]);
 
   useEffect(() => {
-    document.title = "Histórico - Chronos Pomodoro";
+    document.title = "Histórico - Pomodoro Pomodoro";
   }, []);
 
   useEffect(() => {
@@ -814,7 +814,7 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
       worker.terminate();
     }
 
-    document.title = `${state.formattedSecondsRemaining} - Chronos Pomodoro`;
+    document.title = `${state.formattedSecondsRemaining} - Pomodoro Pomodoro`;
 
     worker.postMessage(state);
   }, [worker, state]);
@@ -1063,7 +1063,7 @@ export function taskReducer(
 
 Arquivo:
 
-- `chronos-pomodoro/.env.example`
+- `Pomodoro-pomodoro/.env.example`
 
 Conteúdo:
 
@@ -1077,7 +1077,7 @@ Se não definir `VITE_API_URL`, o frontend usa fallback para `http://localhost:3
 
 ## 10) Roteiro de testes no Postman
 
-Crie um Environment chamado `Chronos Local`:
+Crie um Environment chamado `Pomodoro Local`:
 
 - `baseUrl = http://localhost:3333`
 - `taskId =` (vazio inicialmente)
